@@ -1,1 +1,29 @@
-txt
+==============================================================================================
+
+df.X.dtype
+df.dtypes
+reviews.index.dtype
+
+convert a column of one type into another wherever such a conversion makes sense by using the astype()
+reviews.points.astype('float64')
+
+==============================================================================================
+
+pd.isnull()
+pd.isnotnull()
+
+missing-value data
+reviews[pd.isnull(reviews.country)]
+
+filling the gaps
+reviews.region_2.fillna("Unknown")
+
+updating
+reviews.taster_twitter_handle.replace("@kerinokeefe", "@kerino")
+==============================================================================================
+
+how many nulls?
+n_missing_prices = len(reviews[pd.isnull(reviews.price)])
+
+What are the most common wine-producing regions?
+reviews_per_region = reviews.region_1.fillna("Unknown").value_counts().sort_values(ascending=False)
