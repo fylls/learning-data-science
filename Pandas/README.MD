@@ -5,7 +5,7 @@
 
 Course offered by Kaggle
   
-https://www.kaggle.com/learn
+https://www.kaggle.com/learn/pandas
 
 ![0_r_8O6Lk7IWxdPatc](https://user-images.githubusercontent.com/55017307/129315036-8abacf36-5c9d-49e7-bf5f-5eede8741222.png)
 
