@@ -3,7 +3,7 @@
 # Python
 
 
-Courses offered by Kaggle
+Course offered by Kaggle
   
 https://www.kaggle.com/learn/python
 
