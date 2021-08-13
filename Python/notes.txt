@@ -1,0 +1,471 @@
+============================================================================================
+
+I have been writing python for years, I dind't need this course but hey,
+here are some interesting stuff/notations/syntactic sugar I did not know about
+
+============================================================================================
+
+print(1, 2, 3, sep=' < ')
+>> 1 < 2 < 3
+
+============================================================================================
+
+mystery = print()
+print(mystery)
+>> None
+
+============================================================================================
+
+help(function)
+
+============================================================================================
+
+Defaults arguments
+
+def greet(who="Colin"): print("Hello,", who)
+    
+greet()
+>> Hello, Colin
+
+greet(who="Kaggle")
+>> Hello Kaggle
+
+============================================================================================
+
+Functions Applied to Functions
+
+def mult_by_five(x):
+    return 5 * x
+
+def call(fn, arg):
+    """Call fn on arg"""
+    return fn(arg)
+
+def squared_call(fn, arg):
+    """Call fn on the result of calling fn on arg"""
+    return fn(fn(arg))
+
+print(
+    call(mult_by_five, 1),
+    squared_call(mult_by_five, 1), 
+    sep='\n',
+)
+
+============================================================================================
+
+High Order Functions
+
+def mod_5(x):
+    """Return the remainder of x after dividing by 5"""
+    return x % 5
+
+print(
+    'Which number is biggest?',
+    max(100, 51, 14),
+    'Which number is the biggest modulo 5?',
+    max(100, 51, 14, key=mod_5),
+    sep='\n',
+)
+
+============================================================================================
+
+round(3.14159, 2)
+>> 3.14
+
+rounding to the nearest 10 (n = -1)
+round(30084, -1)
+>> 30080
+
+rounding to the nearest 100 (n = -2)
+round(30084, -2)
+>> 30100
+
+============================================================================================
+
+Comparisons frequently work like you'd hope
+3.0 == 3
+>> True
+
+But sometimes they can be tricky
+'3' == 3
+>> False
+
+Still better than Javascipt tho.
+
+============================================================================================
+
+prepared_for_weather = have_umbrella or rain_level < 5 and have_hood or not rain_level > 0 and is_workday
+
+We can also split it over multiple lines to emphasize
+the 3-part structure described above:
+
+prepared_for_weather = (
+    have_umbrella 
+    or ((rain_level < 5) and have_hood) 
+    or (not (rain_level > 0 and is_workday))
+)
+
+============================================================================================
+
+Conventions
+
+# all numbers are treated as true, except 0
+
+print(bool(1)) 
+>> True
+
+print(bool(0))
+>> False
+
+# all strings are treated as true, except the empty string ""
+
+print(bool("asf"))
+>> True
+print(bool(""))
+>> False
+
+# Generally empty sequences (strings, lists and tuples)
+# are "falsey" and the rest are "truthy"
+
+============================================================================================
+
+print("Splitting", total_candies, "candy" if total_candies == 1 else "candies")
+
+============================================================================================
+
+"exactly one"
+return (int(ketchup) + int(mustard) + int(onion)) == 1
+
+Fun fact: we don't technically need to call int on the arguments.
+Just by doing addition with booleans, Python implicitly does the integer conversion.
+So we could also write...
+
+return (ketchup + mustard + onion) == 1
+
+============================================================================================
+
+planets[-1]
+>> 'Neptune'
+
+planets[:3]
+>> ['Mercury', 'Venus', 'Earth']
+
+planets[3:]
+>> ['Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
+
+planets[-3:]
+>> ['Saturn', 'Uranus', 'Neptune']
+
+Lists are "mutable", meaning they can be modified "in place".
+One way to modify a list is to assign to an index or slice expression.
+
+============================================================================================
+
+sum()
+len()
+sorted()
+max()
+
+============================================================================================
+
+x = 12
+
+# x is a real number, so its imaginary part is 0.
+print(x.imag)
+
+# Here's how to make a complex number, in case you've ever been curious:
+c = 12 + 3j
+
+============================================================================================
+
+A function attached to an object is called a method.
+Non-function things attached to an objects are called attributes
+
+.append()
+.pop()
+.index()
+
+============================================================================================
+
+Error Handling
+
+WRONG
+planets.index('Pluto')
+>> ValueError
+
+RIGHT
+"Pluto" in planets
+>> False
+
+============================================================================================
+
+Tuples
+
+Tuples are almost exactly the same as lists. They differ in just two ways.
+
+1: The syntax for creating them uses parentheses instead of square brackets
+2: They cannot be modified (they are immutable).
+
+t = (1, 2, 3)			or			t = 1, 2, 3
+
+t[0] = 100
+>> TypeError
+
+============================================================================================
+
+Tuples are often used for functions that have multiple return values.
+
+as_integer_ratio() method returns a numerator and a denominator in the form of a tuple:
+
+x = 0.125
+x.as_integer_ratio()
+(1, 8)
+
+numerator, denominator = x.as_integer_ratio()
+print(numerator / denominator)
+
+============================================================================================
+
+some insight into the classic Stupid Python Trick™ for swapping two variables!
+
+a = 1
+b = 0
+a, b = b, a
+print(a, b)
+0 1
+
+x[0], x[-1] = x[-1], x[0].
+
+============================================================================================
+
+for planet in planets:
+    print(planet, end=' ') # print all on same line
+
+============================================================================================
+
+List comprehensions: one of Python's most beloved and unique features
+
+squares = [n**2 for n in range(10)]
+>> [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+SELECT WHERE
+
+short_planets = [planet for planet in planets if len(planet) < 6]
+>> ['Venus', 'Earth', 'Mars']
+
+
+SELECT FROM WHERE
+
+loud_short_planets = [planet.upper() + '!' for planet in planets if len(planet) < 6]
+>> ['VENUS!', 'EARTH!', 'MARS!']
+
+
+============================================================================================
+
+[
+    planet.upper() + '!' 
+    for planet in planets 
+    if len(planet) < 6
+]
+
+============================================================================================
+
+impressive one-line solutions
+
+def count_negatives(nums):  return len([num for num in nums if num < 0])
+
+def count_negatives(nums):  return sum([num < 0 for num in nums])
+
+============================================================================================
+
+"import this"
+
+Readability counts.
+Explicit is better than implicit.
+
+============================================================================================
+
+One place where the Python language really shines is in the manipulation of strings.
+
+looping over a string
+
+[char+'! ' for char in planet]
+>> ['P! ', 'l! ', 'u! ', 't! ', 'o! ']
+
+major way in which they differ from lists is that they are immutable. We can't modify them.
+
+============================================================================================
+
+.upper()
+.lower()
+.index(str) of a substring
+startswith(str)
+.endswith(str)
+.split() at every char
+.split("-") at every - char
+.join(str) mostly"" o " "
+
+
+============================================================================================
+
+datestr = '1956-01-31'
+year, month, day = datestr.split('-')
+'/'.join([month, day, year])
+'01/31/1956'
+
+============================================================================================
+
+"{}, you'll always be the {}th planet to me.".format(planet, position)
+
+"{} weighs about {:.2} kilograms ({:.3%} of Earth's mass). It is home to {:,} Plutonians."
+.format( planet, pluto_mass, pluto_mass / earth_mass, population)
+
+============================================================================================
+
+# Referring to format() arguments by index, starting from 0
+
+s = """Pluto's a {0}. No, it's a {1}. {0}! {1}!""" .format('planet', 'dwarf planet')
+print(s)
+
+
+Pluto's a planet.
+No, it's a dwarf planet.
+planet!
+dwarf planet!
+============================================================================================
+
+planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
+planet_to_initial = {planet: planet[0] for planet in planets}
+
+============================================================================================
+
+The in operator tells us whether something is a key in the dictionary
+
+'Saturn' in planet_to_initial
+>> True
+
+============================================================================================
+
+A for loop over a dictionary will loop over its keys
+
+for k in numbers:
+    print("{} = {}".format(k, numbers[k]))
+
+============================================================================================
+
+# Get all the initials, sort them alphabetically, and put them in a space-separated string.
+
+' '.join(sorted(planet_to_initial.values()))
+
+============================================================================================
+
+# dict.items() lets us iterate over the keys and values of a dictionary simultaneously. 
+
+for planet, initial in planet_to_initial.items():
+    print("{} begins with \"{}\"".format(planet.rjust(10), initial))
+
+============================================================================================
+
+import math
+
+type(math) # module
+
+A module is just a collection of variables (a namespace, if you like) defined by someone else.
+We can see all the names in math using the built-in function dir().
+
+print(dir(math))
+
+math.pi
+math.log(a,b)
+
+help(math)
+help(math.log)
+
+============================================================================================
+
+import math as m
+
+equivalent to
+
+import math
+mt = math
+
+============================================================================================
+
+from math import *
+
+makes all the module's variables directly accessible to you (without any dotted prefix)
+
+These kinds of "star imports" can occasionally lead to weird, difficult-to-debug situations.
+
+from math import *
+from numpy import *
+
+both modules have pi and log functions defined!
+
+from math import log, pi
+from numpy import asarray
+
+this can avoid that
+============================================================================================
+
+quick survival guide for working with strange types.
+
+1: type() (what is this thing?)
+2: dir() (what can I do with it?)
+3: help() (tell me more)
+
+============================================================================================
+
+When you define a new type, you can choose how addition works for it,
+or what it means for an object of that type to be equal to something else.
+
+The designers of lists decided that adding them to numbers wasn't allowed.
+The designers of numpy arrays went a different way
+(adding the number to each element of the array).
+
+numpy's ndarray type is specialized for working with multi-dimensional data,
+so it defines its own logic for indexing, allowing us to index by a tuple to
+specify the index at each dimension.
+
+It's important just to be aware of the fact that:
+this sort of thing is possible and that libraries will often use operator overloading
+in non-obvious or magical-seeming ways.
+
+============================================================================================
+
+When Python programmers want to define how operators behave on their types,
+they do so by implementing methods with special names beginning and ending with 2
+underscores such as __lt__, __setattr__, or __contains__
+
+So, for example, the expression x in [1, 2, 3] is actually calling the list method
+__contains__ behind-the-scenes.
+
+It's equivalent to (the much uglier) [1, 2, 3].__contains__(x).
+
+============================================================================================
+
+def has_lucky_number(nums): return any([num % 7 == 0 for num in nums])
+
+============================================================================================
+
+def word_search(documents, keyword):
+    # list to hold the indices of matching documents
+    indices = []
+    
+    
+    for i, doc in enumerate(documents):
+        tokens = doc.split()
+        normalized = [token.rstrip('.,').lower() for token in tokens]
+        if keyword.lower() in normalized:
+            indices.append(i)
+    return indices
+
+def multi_word_search(documents, keywords):
+    keyword_to_indices = {}
+    for keyword in keywords:
+        keyword_to_indices[keyword] = word_search(documents, keyword)
+    return keyword_to_indices
+
+# Check your answer
+q3.check()
