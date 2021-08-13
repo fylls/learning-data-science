@@ -1,0 +1,70 @@
+==============================================================================================
+
+df.key
+df["key"]
+df["key"][index]
+
+==============================================================================================
+
+Index-based selection:
+selecting data based on its numerical position in the data.
+
+df.iloc[index]
+
+row-first, column-second.
+This is the opposite of what we do in native Python, which is column-first, row-second.
+asier to retrieve rows, and marginally harder to get retrieve columns.
+
+column X            df.iloc[:, X]
+row X               df.iloc[X, :] or simply df.iloc[X]
+
+
+df.iloc[ 2:7 , 0 ]               rows from 2 to 7 in column 0
+df.iloc[ :3 , 0 ]                rows from 0 to 3 in column 0
+df.iloc[ [0, 3, 7] , 0]          rows 0 3 7 of column 0
+df.iloc[-5:]                     last five elements of df ( .tail() )
+
+==============================================================================================
+
+Label-based selection:
+it's the data index value, not its position, which matters.
+
+df.loc[0, 'index1']                                 first value of index1
+df.loc[:, ['index1', 'index2', 'index3']]           all values of indexes 1 2 3
+
+==============================================================================================
+
+Choosing between loc and iloc
+
+When choosing or transitioning between loc and iloc,
+there is one "gotcha" worth keeping in mind,
+the two methods use slightly different indexing schemes.
+
+iloc  0:10 will select entries 0,...,9.
+loc   0:10 will select entries 0,...,10.
+
+==============================================================================================
+
+.set_index("title")
+
+# boolean series
+reviews.country == 'Italy'      
+
+# selecting on specified property
+reviews.loc[reviews.country == 'Italy']
+reviews.loc[(reviews.country == 'Italy') & (reviews.points >= 90)]
+reviews.loc[(reviews.country == 'Italy') | (reviews.points >= 90)]
+reviews.loc[reviews.country.isin(['Italy', 'France'])]
+
+# filter out wines lacking a price tag in the dataset
+reviews.loc[reviews.price.notnull()]
+
+==============================================================================================
+
+reviews['critic'] = 'everyone'
+reviews['index_backwards'] = range(len(reviews), 0, -1)
+
+
+
+
+
