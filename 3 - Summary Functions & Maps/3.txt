@@ -1,0 +1,57 @@
+==============================================================================================
+
+Summary
+
+.describe()
+.mean()
+.median()
+.max()
+.min()
+.unique()
+
+# how often unique values appear in df
+.value_counts() 
+
+==============================================================================================
+
+map() returns a new Series where all the values have been transformed by your function.
+
+#re-mean the scores the wines received to 0
+
+review_points_mean = reviews.points.mean()
+reviews.points.map(lambda p: p - review_points_mean)
+
+==============================================================================================
+
+apply() if we want to transform a whole df by calling a custom method on each row.
+
+def remean_points(row):
+    row.points = row.points - review_points_mean
+    return row
+
+reviews.apply(remean_points, axis='columns')
+
+with axis='index'we can trasform each row
+
+==============================================================================================
+
+Indirect map
+
+reviews.points - review_points_mean             # re-meaning
+
+reviews.country + " - " + reviews.region        # combining country and region
+
+==============================================================================================
+
+wine with the highest points-to-price ratio in the dataset.
+
+bargain_idx = (reviews.points / reviews.price).idxmax()
+bargain_wine = reviews.loc[bargain_idx, 'title']
+
+==============================================================================================
+
+counting how many times a certain word appern in the desriptions
+
+n_trop = reviews.description.map(lambda desc: "tropical" in desc).sum()
+n_fruity = reviews.description.map(lambda desc: "fruity" in desc).sum()
+descriptor_counts = pd.Series([n_trop, n_fruity], index=['tropical', 'fruity'])
