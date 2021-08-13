@@ -1,11 +1,11 @@
 <div align="center">
 
-# Data Analysis with Pandas
+# Data Science
 
 
-Course offered by Kaggle
+Courses offered by Kaggle
   
-https://www.kaggle.com/learn/pandas
+https://www.kaggle.com/learn
 
 <br>
 
